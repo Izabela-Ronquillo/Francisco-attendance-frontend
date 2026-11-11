@@ -1,4 +1,4 @@
-const API_BASE = "";
+﻿const API_BASE = "";
 
 const form = document.getElementById("attendance-form");
 const formTitle = document.getElementById("form-title");
@@ -71,12 +71,16 @@ function renderRecords() {
   hide(emptyEl);
   show(tableWrap);
   records.forEach((r) => {
+    const date = r.date ?? r.Date ?? "";
+    const subjectName = r.subjectName ?? r.subject ?? r.Subject ?? r.subject_name ?? r["Subject Name"] ?? "";
+    const section = r.section ?? r.Section ?? "";
+    const studentName = r.studentName ?? r.student ?? r.Student ?? r.student_name ?? r.name ?? r.Name ?? r["Student Name"] ?? "";
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${escapeHtml(r.date)}</td>
-      <td>${escapeHtml(r.subjectName)}</td>
-      <td>${escapeHtml(r.section)}</td>
-      <td>${escapeHtml(r.studentName)}</td>
+      <td>${escapeHtml(date)}</td>
+      <td>${escapeHtml(subjectName)}</td>
+      <td>${escapeHtml(section)}</td>
+      <td>${escapeHtml(studentName)}</td>
       <td class="row-actions">
         <button type="button" class="small" data-action="edit" data-id="${r.id}">Edit</button>
         <button type="button" class="small danger" data-action="delete" data-id="${r.id}">Delete</button>
@@ -108,10 +112,10 @@ function startEdit(id) {
   const r = records.find((x) => x.id === id);
   if (!r) return;
   recordId.value = r.id;
-  dateInput.value = r.date || "";
-  subjectInput.value = r.subjectName || "";
-  sectionInput.value = r.section || "";
-  studentInput.value = r.studentName || "";
+  dateInput.value = r.date ?? r.Date ?? "";
+  subjectInput.value = r.subjectName ?? r.subject ?? r.Subject ?? r.subject_name ?? r["Subject Name"] ?? "";
+  sectionInput.value = r.section ?? r.Section ?? "";
+  studentInput.value = r.studentName ?? r.student ?? r.Student ?? r.student_name ?? r.name ?? r.Name ?? r["Student Name"] ?? "";
   formTitle.textContent = "Edit Attendance Record";
   submitBtn.textContent = "Update Record";
   show(cancelBtn);
@@ -176,3 +180,4 @@ tbody.addEventListener("click", (e) => {
 });
 
 loadRecords();
+
