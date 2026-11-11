@@ -18,12 +18,12 @@ const emptyEl = document.getElementById("empty");
 const tableWrap = document.getElementById("table-wrap");
 const tbody = document.getElementById("records-body");
 
+const loginPrompt = document.getElementById("login-prompt");
 const loginForm = document.getElementById("login-form");
 const loginUsername = document.getElementById("login-username");
 const loginPassword = document.getElementById("login-password");
 const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
-const authStatus = document.getElementById("auth-status");
 const authMsg = document.getElementById("auth-msg");
 
 let records = [];
@@ -68,21 +68,21 @@ function resetForm() {
 
 function updateAuthUI() {
   if (isLoggedIn()) {
-    authStatus.textContent = "Admin: Logged in";
-    hide(loginForm);
+    hide(loginPrompt);
     show(logoutBtn);
+    loginForm.reset();
+    setAuthMessage("");
   } else {
-    authStatus.textContent = "Admin: Not logged in";
-    show(loginForm);
+    hide(loginPrompt);
     hide(logoutBtn);
   }
 }
 
 function requireLogin() {
   if (isLoggedIn()) return true;
-  setMessage("error", "Please login as admin before adding, editing, or deleting records.");
-  setAuthMessage("Admin login required.");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  setAuthMessage("");
+  show(loginPrompt);
+  setTimeout(() => loginUsername.focus(), 0);
   return false;
 }
 
@@ -233,10 +233,8 @@ loginForm.addEventListener("submit", async (e) => {
     });
     if (!data.token) throw new Error("Login failed");
     setToken(data.token);
-    loginPassword.value = "";
     updateAuthUI();
-    setAuthMessage("");
-    setMessage("notice", "Admin logged in.");
+    setMessage("notice", "Admin logged in. You can continue.");
   } catch (e2) {
     setAuthMessage(e2.message || "Login failed");
   } finally {
@@ -248,7 +246,7 @@ logoutBtn.addEventListener("click", () => {
   setToken("");
   resetForm();
   updateAuthUI();
-  setAuthMessage("");
+  clearMessages();
   setMessage("notice", "Logged out.");
 });
 

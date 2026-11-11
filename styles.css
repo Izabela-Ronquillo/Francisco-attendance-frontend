@@ -325,17 +325,23 @@ td { color: var(--text); }
   .actions { align-items: stretch; }
   .actions button { width: 100%; }
 }
-.auth-bar {
-  margin-top: 14px;
+.header-top {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }
-.auth-status {
+.login-prompt {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.login-msg {
+  margin: 0 0 10px;
   font-weight: 600;
-  color: #eaf2fb;
-  margin-right: 4px;
+  color: #f4f8fc;
 }
 .login-form {
   display: flex;
@@ -344,13 +350,13 @@ td { color: var(--text); }
   gap: 8px;
 }
 .login-form input {
-  width: 160px;
+  width: 170px;
   padding: 8px 10px;
   font-size: 0.9rem;
 }
-#auth-msg {
-  margin-top: 10px;
-}
-#auth-msg.msg.error {
-  background: rgba(230, 238, 247, 0.95);
+.auth-error {
+  margin-top: 8px;
+  color: #ffe8e8;
+  font-weight: 500;
+  font-size: 0.92rem;
 }

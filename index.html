@@ -13,18 +13,22 @@
     </div>
     <div class="page">
       <header>
-        <h1>Attendance Monitoring Portal</h1>
-        <p class="sub">Manage attendance records for Students</p>
-        <div class="auth-bar">
-          <span id="auth-status" class="auth-status">Admin: Not logged in</span>
-          <form id="login-form" class="login-form">
-            <input id="login-username" type="text" placeholder="Username" autocomplete="username" />
-            <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" />
-            <button type="submit" id="login-btn" class="small">Login</button>
-          </form>
+        <div class="header-top">
+          <div>
+            <h1>Attendance Monitoring Portal</h1>
+            <p class="sub">Manage attendance records for Students</p>
+          </div>
           <button type="button" id="logout-btn" class="small secondary hidden">Logout</button>
         </div>
-        <div id="auth-msg" class="msg error hidden"></div>
+        <div id="login-prompt" class="login-prompt hidden">
+          <p class="login-msg">You are not logged in, Log in first</p>
+          <form id="login-form" class="login-form">
+            <input id="login-username" type="text" placeholder="Username" autocomplete="username" required />
+            <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required />
+            <button type="submit" id="login-btn" class="small">Login</button>
+          </form>
+          <div id="auth-msg" class="auth-error hidden"></div>
+        </div>
       </header>
 
       <section class="card">
