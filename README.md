@@ -1,4 +1,4 @@
-﻿# Francisco Attendance Frontend
+# Francisco Attendance Frontend
 
 Plain HTML/CSS/JS web portal for `FranciscoAttendancePortal` / `Attendance_List`.
 

@@ -1,4 +1,4 @@
-﻿const API_BASE = "";
+const API_BASE = "";
 
 const form = document.getElementById("attendance-form");
 const formTitle = document.getElementById("form-title");
