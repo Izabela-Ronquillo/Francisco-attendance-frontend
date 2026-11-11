@@ -1,14 +1,14 @@
 ﻿# Francisco Attendance Frontend
 
-React + Vite web portal for `FranciscoAttendancePortal` / `Attendance_List`.
+Plain HTML/CSS/JS web portal for `FranciscoAttendancePortal` / `Attendance_List`.
 
-## Setup
-1. `npm install`
-2. Copy `.env.example` to `.env` and set `VITE_API_URL` to the deployed backend base URL (or leave empty for same-origin).
-3. `npm run dev`
+## Files
+- `index.html` - UI structure
+- `styles.css` - styling
+- `app.js` - CRUD logic (calls backend API)
 
-## Build
-- `npm run build` (outputs to `dist/`)
+## Configure
+Edit `API_BASE` at the top of `app.js` to point to the deployed backend base URL.
 
 ## Deploy
-Deploy to Vercel. Set `VITE_API_URL` environment variable to the backend API URL if frontend and backend are separate deployments.
+Deploy as a static site to Vercel/GitHub Pages. If frontend and backend are on different origins, ensure backend CORS allows the frontend origin.

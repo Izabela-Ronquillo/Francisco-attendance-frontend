@@ -136,9 +136,7 @@ input {
 }
 
 input::placeholder { color: #94a3b8; }
-
 input:hover { border-color: #b9c7da; }
-
 input:focus {
   outline: none;
   border-color: var(--primary);
@@ -275,6 +273,8 @@ tbody tr:last-child td { border-bottom: none; }
   color: var(--muted);
   margin: 4px 0;
 }
+
+.hidden { display: none !important; }
 
 @media (max-width: 720px) {
   .page { padding: 18px 14px 32px; }

@@ -4,298 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Francisco Attendance Portal</title>
-    <style>
-:root {
-  --bg: #eef3f9;
-  --bg-accent: #dfe9f5;
-  --surface: #ffffff;
-  --surface-alt: #f7faff;
-  --text: #142033;
-  --muted: #5b6b7f;
-  --border: #d6deea;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-soft: #e8efff;
-  --secondary: #e7edf6;
-  --secondary-hover: #d9e3f0;
-  --danger: #dc2626;
-  --danger-hover: #b91c1c;
-  --ok: #15803d;
-  --ok-bg: #ecfdf3;
-  --error: #b91c1c;
-  --error-bg: #fef2f2;
-  --shadow: 0 10px 30px rgba(20, 32, 51, 0.08);
-  --radius: 14px;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(1200px 400px at 10% -10%, #dbeafe 0%, transparent 60%),
-    radial-gradient(900px 300px at 100% 0%, #e0e7ff 0%, transparent 55%),
-    linear-gradient(180deg, var(--bg) 0%, #f7f9fc 100%);
-  min-height: 100vh;
-  line-height: 1.5;
-}
-
-.page {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 32px 20px 48px;
-}
-
-header {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
-  color: #fff;
-  padding: 28px 28px 24px;
-  border-radius: 18px;
-  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.25);
-  position: relative;
-  overflow: hidden;
-}
-
-header::after {
-  content: "";
-  position: absolute;
-  right: -60px;
-  top: -60px;
-  width: 220px;
-  height: 220px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-}
-
-header h1 {
-  margin: 0 0 6px;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-}
-
-.sub {
-  margin: 0 0 10px;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
-}
-
-.api {
-  margin: 0;
-  display: inline-block;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  padding: 6px 10px;
-  border-radius: 999px;
-  backdrop-filter: blur(2px);
-}
-
-.api code {
-  font-family: Consolas, "SFMono-Regular", Menlo, monospace;
-  font-size: 0.88rem;
-  color: #fff;
-}
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px;
-  margin-top: 20px;
-  box-shadow: var(--shadow);
-}
-
-.card h2 {
-  margin: 0 0 16px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px 16px;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #334155;
-}
-
-input {
-  width: 100%;
-  padding: 11px 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 0.96rem;
-  color: var(--text);
-  background: #fff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-
-input::placeholder { color: #94a3b8; }
-
-input:hover { border-color: #b9c7da; }
-
-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-  background: #fbfdff;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  flex-wrap: wrap;
-}
-
-button {
-  appearance: none;
-  background: var(--primary);
-  color: #fff;
-  border: 1px solid transparent;
-  padding: 11px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1.2;
-  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
-}
-
-button:hover { background: var(--primary-hover); }
-button:active { transform: translateY(1px); }
-
-button.secondary {
-  background: var(--secondary);
-  color: var(--text);
-  box-shadow: none;
-  border-color: #d7e0ec;
-}
-button.secondary:hover { background: var(--secondary-hover); }
-
-button.danger {
-  background: var(--danger);
-  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.18);
-}
-button.danger:hover { background: var(--danger-hover); }
-
-button.small {
-  padding: 7px 12px;
-  font-size: 0.85rem;
-  border-radius: 8px;
-  box-shadow: none;
-}
-
-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.table-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-
-.table-wrap {
-  overflow: auto;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #fff;
-}
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  min-width: 720px;
-}
-
-th, td {
-  padding: 13px 14px;
-  text-align: left;
-  vertical-align: middle;
-  border-bottom: 1px solid var(--border);
-}
-
-th {
-  position: sticky;
-  top: 0;
-  background: var(--surface-alt);
-  color: #334155;
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border-bottom: 1px solid #cfd9e6;
-  z-index: 1;
-}
-
-tbody tr:nth-child(even) { background: #fbfcfe; }
-tbody tr:hover { background: #f1f6ff; }
-tbody tr:last-child td { border-bottom: none; }
-
-.row-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.msg {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-weight: 500;
-  border: 1px solid transparent;
-}
-
-.msg.error {
-  background: var(--error-bg);
-  color: var(--error);
-  border-color: #fecaca;
-}
-
-.msg.ok {
-  background: var(--ok-bg);
-  color: var(--ok);
-  border-color: #bbf7d0;
-}
-
-.muted {
-  color: var(--muted);
-  margin: 4px 0;
-}
-
-@media (max-width: 720px) {
-  .page { padding: 18px 14px 32px; }
-  header { padding: 22px 18px; border-radius: 14px; }
-  header h1 { font-size: 1.55rem; }
-  .card { padding: 16px; }
-  .table-head { align-items: flex-start; flex-direction: column; }
-  .actions { align-items: stretch; }
-  .actions button { width: 100%; }
-}
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div class="page">
+      <header>
+        <h1>Francisco Attendance Portal</h1>
+        <p class="sub">Manage attendance records for FranciscoAttendancePortal / Attendance_List</p>
+        <p class="api">API: <code id="api-base"></code></p>
+      </header>
+
+      <section class="card">
+        <h2 id="form-title">Add Attendance Record</h2>
+        <form id="attendance-form" class="form">
+          <input type="hidden" id="record-id" />
+          <label>Date<input id="date" name="date" type="date" required /></label>
+          <label>Subject Name<input id="subjectName" name="subjectName" required placeholder="e.g. IT 301" /></label>
+          <label>Section<input id="section" name="section" required placeholder="e.g. BSIT-3A" /></label>
+          <label>Student Name<input id="studentName" name="studentName" required placeholder="Full name" /></label>
+          <div class="actions">
+            <button type="submit" id="submit-btn">Add Record</button>
+            <button type="button" id="cancel-btn" class="secondary hidden">Cancel</button>
+          </div>
+        </form>
+        <div id="error" class="msg error hidden"></div>
+        <div id="notice" class="msg ok hidden"></div>
+      </section>
+
+      <section class="card">
+        <div class="table-head">
+          <h2>Attendance Records</h2>
+          <button type="button" id="refresh-btn" class="secondary">Refresh</button>
+        </div>
+        <div id="loading" class="muted">Loading records...</div>
+        <div id="empty" class="muted hidden">No attendance records found.</div>
+        <div class="table-wrap hidden" id="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Subject Name</th>
+                <th>Section</th>
+                <th>Student Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="records-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <script src="app.js"></script>
   </body>
 </html>
