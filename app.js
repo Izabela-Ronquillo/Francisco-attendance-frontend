@@ -16,11 +16,8 @@ const loadingEl = document.getElementById("loading");
 const emptyEl = document.getElementById("empty");
 const tableWrap = document.getElementById("table-wrap");
 const tbody = document.getElementById("records-body");
-const apiBaseEl = document.getElementById("api-base");
 
 let records = [];
-
-apiBaseEl.textContent = API_BASE || "(same origin)";
 
 function show(el) { el.classList.remove("hidden"); }
 function hide(el) { el.classList.add("hidden"); }
