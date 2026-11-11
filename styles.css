@@ -325,3 +325,32 @@ td { color: var(--text); }
   .actions { align-items: stretch; }
   .actions button { width: 100%; }
 }
+.auth-bar {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.auth-status {
+  font-weight: 600;
+  color: #eaf2fb;
+  margin-right: 4px;
+}
+.login-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.login-form input {
+  width: 160px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+#auth-msg {
+  margin-top: 10px;
+}
+#auth-msg.msg.error {
+  background: rgba(230, 238, 247, 0.95);
+}

@@ -1,4 +1,5 @@
 ﻿const API_BASE = "";
+const TOKEN_KEY = "fa_admin_token";
 
 const form = document.getElementById("attendance-form");
 const formTitle = document.getElementById("form-title");
@@ -17,7 +18,22 @@ const emptyEl = document.getElementById("empty");
 const tableWrap = document.getElementById("table-wrap");
 const tbody = document.getElementById("records-body");
 
+const loginForm = document.getElementById("login-form");
+const loginUsername = document.getElementById("login-username");
+const loginPassword = document.getElementById("login-password");
+const loginBtn = document.getElementById("login-btn");
+const logoutBtn = document.getElementById("logout-btn");
+const authStatus = document.getElementById("auth-status");
+const authMsg = document.getElementById("auth-msg");
+
 let records = [];
+
+function getToken() { return localStorage.getItem(TOKEN_KEY) || ""; }
+function setToken(token) {
+  if (token) localStorage.setItem(TOKEN_KEY, token);
+  else localStorage.removeItem(TOKEN_KEY);
+}
+function isLoggedIn() { return !!getToken(); }
 
 function show(el) { el.classList.remove("hidden"); }
 function hide(el) { el.classList.add("hidden"); }
@@ -30,6 +46,11 @@ function setMessage(type, text) {
     noticeEl.textContent = text || "";
     text ? show(noticeEl) : hide(noticeEl);
   }
+}
+
+function setAuthMessage(text) {
+  authMsg.textContent = text || "";
+  text ? show(authMsg) : hide(authMsg);
 }
 
 function clearMessages() {
@@ -45,13 +66,39 @@ function resetForm() {
   hide(cancelBtn);
 }
 
+function updateAuthUI() {
+  if (isLoggedIn()) {
+    authStatus.textContent = "Admin: Logged in";
+    hide(loginForm);
+    show(logoutBtn);
+  } else {
+    authStatus.textContent = "Admin: Not logged in";
+    show(loginForm);
+    hide(logoutBtn);
+  }
+}
+
+function requireLogin() {
+  if (isLoggedIn()) return true;
+  setMessage("error", "Please login as admin before adding, editing, or deleting records.");
+  setAuthMessage("Admin login required.");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  return false;
+}
+
 async function request(path, options = {}) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    ...options,
-  });
+  const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+  if (!res.ok) {
+    if (res.status === 401) {
+      setToken("");
+      updateAuthUI();
+    }
+    throw new Error(data.error || `Request failed (${res.status})`);
+  }
   return data;
 }
 
@@ -109,6 +156,7 @@ async function loadRecords() {
 }
 
 function startEdit(id) {
+  if (!requireLogin()) return;
   const r = records.find((x) => x.id === id);
   if (!r) return;
   recordId.value = r.id;
@@ -124,6 +172,7 @@ function startEdit(id) {
 }
 
 async function deleteRecord(id) {
+  if (!requireLogin()) return;
   if (!window.confirm("Delete this attendance record?")) return;
   clearMessages();
   try {
@@ -138,6 +187,7 @@ async function deleteRecord(id) {
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  if (!requireLogin()) return;
   const payload = {
     date: dateInput.value.trim(),
     subjectName: subjectInput.value.trim(),
@@ -168,6 +218,40 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  setAuthMessage("");
+  clearMessages();
+  loginBtn.disabled = true;
+  try {
+    const data = await request("/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: loginUsername.value.trim(),
+        password: loginPassword.value,
+      }),
+    });
+    if (!data.token) throw new Error("Login failed");
+    setToken(data.token);
+    loginPassword.value = "";
+    updateAuthUI();
+    setAuthMessage("");
+    setMessage("notice", "Admin logged in.");
+  } catch (e2) {
+    setAuthMessage(e2.message || "Login failed");
+  } finally {
+    loginBtn.disabled = false;
+  }
+});
+
+logoutBtn.addEventListener("click", () => {
+  setToken("");
+  resetForm();
+  updateAuthUI();
+  setAuthMessage("");
+  setMessage("notice", "Logged out.");
+});
+
 cancelBtn.addEventListener("click", () => { resetForm(); clearMessages(); });
 refreshBtn.addEventListener("click", loadRecords);
 
@@ -179,5 +263,5 @@ tbody.addEventListener("click", (e) => {
   if (action === "delete") deleteRecord(id);
 });
 
+updateAuthUI();
 loadRecords();
-
