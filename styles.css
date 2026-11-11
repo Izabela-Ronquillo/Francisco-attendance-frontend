@@ -9,7 +9,7 @@
   --blue-600: #4a7199;
   --blue-700: #3d5f82;
 
-  --bg: #e8eef5;
+  --bg: #dfeaf5;
   --surface: #f7fafd;
   --surface-alt: #edf3f8;
   --surface-hover: #e3edf7;
@@ -17,14 +17,14 @@
   --text-strong: #24384d;
   --muted: #5f748b;
   --border: #c9d8e6;
-  --primary: #5b84ab;
-  --primary-hover: #4a7199;
-  --primary-active: #3d5f82;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-active: #1e40af;
   --secondary: #dde8f3;
   --secondary-hover: #d1dfed;
-  --danger: #6f86a0;
-  --danger-hover: #5f748b;
-  --focus: rgba(91, 132, 171, 0.25);
+  --danger: #4a7199;
+  --danger-hover: #3d5f82;
+  --focus: rgba(37, 99, 235, 0.22);
   --shadow: 0 8px 24px rgba(47, 69, 92, 0.08);
   --radius: 12px;
 }
@@ -35,23 +35,74 @@ body {
   margin: 0;
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--text);
-  background: linear-gradient(180deg, #eaf1f8 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #e6f0fb 0%, #d7e6f5 100%);
   min-height: 100vh;
   line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.bubbles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bubbles span {
+  position: absolute;
+  bottom: -140px;
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), rgba(91, 132, 171, 0.18) 60%, rgba(37, 99, 235, 0.12));
+  opacity: 0.55;
+  animation: floatUp linear infinite;
+}
+
+.bubbles span:nth-child(1) { left: 6%; width: 90px; height: 90px; animation-duration: 22s; animation-delay: 0s; }
+.bubbles span:nth-child(2) { left: 18%; width: 40px; height: 40px; animation-duration: 14s; animation-delay: 2s; opacity: 0.4; }
+.bubbles span:nth-child(3) { left: 28%; width: 120px; height: 120px; animation-duration: 28s; animation-delay: 4s; opacity: 0.35; }
+.bubbles span:nth-child(4) { left: 42%; width: 55px; height: 55px; animation-duration: 18s; animation-delay: 1s; }
+.bubbles span:nth-child(5) { left: 55%; width: 26px; height: 26px; animation-duration: 12s; animation-delay: 6s; opacity: 0.45; }
+.bubbles span:nth-child(6) { left: 63%; width: 100px; height: 100px; animation-duration: 26s; animation-delay: 3s; opacity: 0.32; }
+.bubbles span:nth-child(7) { left: 74%; width: 60px; height: 60px; animation-duration: 17s; animation-delay: 5s; }
+.bubbles span:nth-child(8) { left: 82%; width: 34px; height: 34px; animation-duration: 13s; animation-delay: 0s; opacity: 0.42; }
+.bubbles span:nth-child(9) { left: 90%; width: 110px; height: 110px; animation-duration: 30s; animation-delay: 7s; opacity: 0.3; }
+.bubbles span:nth-child(10) { left: 12%; width: 22px; height: 22px; animation-duration: 11s; animation-delay: 8s; opacity: 0.38; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) translateX(0) scale(1); }
+  50% { transform: translateY(-55vh) translateX(12px) scale(1.03); }
+  100% { transform: translateY(-120vh) translateX(-10px) scale(1); }
 }
 
 .page {
   max-width: 1120px;
   margin: 0 auto;
   padding: 32px 20px 48px;
+  position: relative;
+  z-index: 1;
 }
 
 header {
-  background: linear-gradient(135deg, #4f7396 0%, #5b84ab 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
   color: #f4f8fc;
   padding: 26px 28px 22px;
   border-radius: 14px;
-  box-shadow: 0 10px 26px rgba(61, 95, 130, 0.18);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
 }
 
 header h1 {
@@ -137,7 +188,8 @@ button {
   font-weight: 600;
   font-size: 0.95rem;
   line-height: 1.2;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
 }
 
 button:hover {
@@ -153,28 +205,32 @@ button.secondary {
   background: var(--secondary);
   color: var(--text-strong);
   border-color: #c7d7e6;
+  box-shadow: none;
 }
 button.secondary:hover { background: var(--secondary-hover); }
 
 button.danger {
-  background: #6b84a0;
-  border-color: #6b84a0;
+  background: #4f7396;
+  border-color: #4f7396;
   color: #f6faff;
+  box-shadow: none;
 }
 button.danger:hover {
-  background: #5f768f;
-  border-color: #5f768f;
+  background: #446681;
+  border-color: #446681;
 }
 
 button.small {
   padding: 7px 12px;
   font-size: 0.85rem;
   border-radius: 8px;
+  box-shadow: none;
 }
 
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .table-head {
