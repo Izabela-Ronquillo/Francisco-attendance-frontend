@@ -103,6 +103,7 @@ header::after {
   height: 200px;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 50%;
+  pointer-events: none;
 }
 
 header h1 {
@@ -330,6 +331,8 @@ td { color: var(--text); }
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
+  position: relative;
+  z-index: 1;
 }
 .login-prompt {
   margin-top: 14px;
@@ -337,6 +340,17 @@ td { color: var(--text); }
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.22);
+  position: relative;
+  z-index: 1;
+}
+#logout-btn {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.18);
+  color: #f8fbff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+#logout-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
 }
 .login-msg {
   margin: 0 0 10px;
