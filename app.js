@@ -1,4 +1,4 @@
-﻿const API_BASE = "https://franciscoattendanceportal.vercel.app/api/";
+﻿const API_BASE = "";
 
 const form = document.getElementById("attendance-form");
 const formTitle = document.getElementById("form-title");
